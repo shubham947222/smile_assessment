@@ -64,6 +64,7 @@ function App() {
       <h1>Search Your Medicine</h1>
       <div>
         <input
+          className="rounded-lg"
           type="text"
           name="shubh"
           value={search}

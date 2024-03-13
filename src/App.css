@@ -12,6 +12,9 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+::-webkit-scrollbar {
+  width: 1px; /* Adjust this value to decrease the width */
+}
 
 .App-header {
   background-color: #282c34;
