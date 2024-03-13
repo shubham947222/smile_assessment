@@ -11,17 +11,6 @@ function App() {
   useEffect(() => {
     fetchData();
   }, []);
-  console.log(search?.length, "search");
-  console.log(filteredData, "filteredData");
-  useEffect(() => {
-    if (search?.length === 0) {
-      setFilterredData([]);
-    }
-    setTimeout(() => {
-      const filterData = csvData.filter((each) => each.includes(search));
-      setFilterredData(filterData);
-    }, 300);
-  }, [search]);
 
   const fetchData = async () => {
     fetch(CSV)
@@ -45,34 +34,54 @@ function App() {
     return data;
   };
 
+  useEffect(() => {
+    if (search?.length === 0) {
+      setFilterredData([]);
+      return;
+    }
+    let timer = setTimeout(() => {
+      const filterData = csvData.filter((each) =>
+        each.toLowerCase().includes(search.toLowerCase())
+      );
+      setFilterredData(filterData);
+    }, 300);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [search]);
+
   return (
-    <div className="App">
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          marginTop: "10px",
-        }}
-      >
+    <div
+      className="App"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: "10px",
+      }}
+    >
+      <h1>Search Your Medicine</h1>
+      <div>
         <input
           type="text"
           name="shubh"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <div
-          className="card d-flex flex-column justify-content-center align-items-center "
-          style={{
-            height: "400px",
-            overflowY: "scroll",
-          }}
-        >
-          {filteredData?.map((each) => (
-            <p>{each}</p>
-          ))}
-        </div>
+        {filteredData?.length > 0 && (
+          <div
+            className="card d-flex flex-column justify-content-center align-items-center "
+            style={{
+              height: "400px",
+              overflowY: "scroll",
+            }}
+          >
+            {filteredData?.map((each) => (
+              <p>{each}</p>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
