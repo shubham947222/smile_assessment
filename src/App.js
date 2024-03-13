@@ -70,17 +70,23 @@ function App() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        {filteredData?.length > 0 && (
-          <div
-            className="card d-flex flex-column justify-content-center align-items-center "
-            style={{
-              height: "400px",
-              overflowY: "scroll",
-            }}
-          >
-            {filteredData?.map((each) => (
-              <p>{each}</p>
-            ))}
+        {search?.length > 0 && (
+          <div>
+            {filteredData?.length > 0 ? (
+              <div
+                className="card d-flex flex-column justify-content-center align-items-center "
+                style={{
+                  height: "400px",
+                  overflowY: "scroll",
+                }}
+              >
+                {filteredData?.map((each) => (
+                  <p>{each}</p>
+                ))}
+              </div>
+            ) : (
+              <p className="text-center">No result!! </p>
+            )}
           </div>
         )}
       </div>
